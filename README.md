@@ -9,12 +9,16 @@ Mimarlık ve iç mekân odaklı, Türkçe bir konsept stüdyo sitesi. Krem ve ze
 - Açılışta görsel/font yükleme kontrolü; geç düğmesi, Escape, azaltılmış hareket ve hata durumunda otomatik açılma
 - Tam ekran kapakta scroll ile derinlik hareketi
 - Farklı hızlarda ilerleyen fotoğraf katmanları ve parallax
-- Üç konsept mekân arasında geçiş ve açılabilir proje detayları
-- Tam ekran menü, sayfa içi gezinme ve süreç akordeonları
+- Dikey kaydırmayla yatay ilerleyen dört konsept mekân ve açılabilir proje detayları
+- Kompakt açılır menü, Lenis ile yumuşak kaydırma ve sayfa içi gezinme
+- Görselli dört süreç satırı, lacivert sahnede yatay ilerleyen üç yaklaşım kartı
+- Scroll ile sırayla fotoğrafı açılan sayaçlar ve konsept marka şeridi
+- Okunabilir üç yazı, kurucu alanı, genişletilebilir SSS
+- Demo proje formu, tarih/saat seçimi ve cihazda oluşturulan talep indirmesi
 - Mobil düzen, klavye erişimi ve azaltılmış hareket tercihi desteği
 - Yerel WebP görseller ve yerel font dosyaları
 
-Projeler, fotoğraflar ve metinler bir tasarım konseptini temsil eder. Gerçekleşmiş proje, müşteri veya şirket geçmişi iddiası taşımaz. İletişim formu veya sunucu tarafı veri toplama bulunmaz.
+Projeler, fotoğraflar ve metinler bir tasarım konseptini temsil eder. Gerçekleşmiş proje, müşteri veya şirket geçmişi iddiası taşımaz. Form ve randevu akışları demodur. Veriler sunucuya gönderilmez veya kalıcı depolamaya yazılmaz; pencere kapandığında temizlenir. Gerçek randevu ya da e-posta gönderilmez.
 
 ## Yerelde çalıştırma
 
@@ -32,7 +36,9 @@ Ardından `http://127.0.0.1:4317` adresini açın. Build veya paket kurulumu ger
 dist/
   index.html          Sayfa içeriği ve dialog yapıları
   style.css           Görsel dil, responsive düzen ve geçişler
-  app.js              Scroll, menü ve proje etkileşimleri
+  app.js              Scroll, menü, dialog ve demo form etkileşimleri
+  motion.js           DOM bağımsız scroll geometrisi
+  vendor/             Sabit sürümlü Lenis 1.3.26
   intro.js            Açılış zaman çizelgesi ve güvenli tamamlanma
   intro.css           Yükleme sahnesi ve tam ekran kapak
   assets/             WebP görseller ve fontlar
@@ -46,7 +52,7 @@ licenses/             Üçüncü taraf font lisansları
 ```sh
 node --check dist/app.js
 node --check dist/intro.js
-node --test scripts/intro.test.mjs
+node --test scripts/*.test.mjs
 python3 scripts/validate.py
 ```
 
@@ -56,8 +62,8 @@ Doğrulayıcı; HTML içindeki yerel varlıkları, bağlantı hedeflerini, görs
 
 Görsel yön ve hareket yaklaşımı için [Stanzza](https://stanzza.design/awards) referans alınmıştır. Kabizzu bağımsız bir konsept çalışmasıdır; Stanzza ile bağlantılı değildir. Referans sitenin kaynak kodu, logosu veya fotoğrafları bu repoya alınmamıştır.
 
-Üç iç mekân görseli OpenAI'nin yerleşik Imagegen aracıyla bu proje için üretilmiş ve WebP biçimine dönüştürülmüştür. İstemler `docs/image-prompts.json` dosyasındadır.
+Dört iç mekân görseli, bir mimari çizim ve kurgusal kurucu portresi OpenAI'nin yerleşik Imagegen aracıyla bu proje için üretilmiş ve WebP biçimine dönüştürülmüştür. İstemler `docs/image-prompts.json` dosyasındadır.
 
 ## Lisans
 
-Özgün proje kodu ve dokümantasyonu [MIT](LICENSE) lisanslıdır. Proje için üretilen görseller de hak sahibinin lisanslayabildiği ölçüde aynı izinle sunulur. Üçüncü taraf fontlar kendi SIL Open Font License 1.1 koşullarına tabidir. Ayrıntılar: [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+Özgün proje kodu ve dokümantasyonu [MIT](LICENSE) lisanslıdır. Proje için üretilen görseller de hak sahibinin lisanslayabildiği ölçüde aynı izinle sunulur. Üçüncü taraf fontlar kendi SIL Open Font License 1.1 koşullarına, Lenis kendi MIT lisansına tabidir. Ayrıntılar: [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).

@@ -43,3 +43,9 @@
 }
 @media(max-height:500px) and (min-width:601px){.intro-brand{top:14px}.intro-brand .wordmark{font-size:36px}.intro-signature{font-size:21px}.intro-title{font-size:8vh}.hero--immersive h1{font-size:13vh}.hero--immersive .hero-caption{top:42%;font-size:24px}.hero--immersive h1{top:53%}.hero-bottom p,.hero-edition{font-size:9px}}
 @media(prefers-reduced-motion:reduce){.intro-pending{overflow:visible}.intro-pending .site-intro{display:none}.intro-pending .site-header,.intro-pending .hero-caption,.intro-pending .hero-line-text,.intro-pending .hero-bottom{opacity:1}.hero.hero--immersive{height:100svh;min-height:0}.hero--immersive .hero-frame img{will-change:auto}}
+/* Cover proportions follow the reference's full-height opening. */
+.hero.hero--immersive{height:100svh}
+.hero--immersive .hero-caption{top:52%;font:400 clamp(25px,2.55vw,40px)/1.15 var(--hand);letter-spacing:-.025em}
+.hero--immersive h1{top:59%;font-size:clamp(58px,5.5vw,90px);line-height:.92}
+.intro-signature{font:400 clamp(24px,2.55vw,40px)/1.15 var(--hand)}
+@media(max-width:600px){.hero--immersive .hero-caption{top:49%;font-size:25px}.hero--immersive h1{top:56%;font-size:14vw;line-height:.95}.intro-signature{font-size:24px}}
