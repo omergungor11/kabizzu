@@ -11,9 +11,10 @@ Mimarlık ve iç mekân odaklı, Türkçe bir konsept stüdyo sitesi. Krem ve ze
 - Farklı hızlarda ilerleyen fotoğraf katmanları ve parallax
 - Dikey kaydırmayla yatay ilerleyen dört konsept mekân ve açılabilir proje detayları
 - Kompakt açılır menü, Lenis ile yumuşak kaydırma ve sayfa içi gezinme
-- Görselli dört süreç satırı, lacivert sahnede yatay ilerleyen üç yaklaşım kartı
+- Görselli dört süreç satırı, lacivert sahnede sağ alttaki bir kareden büyüyerek açılan mimarlık kartı ve ardından yatay ilerleyen üç yaklaşım kartı
 - Scroll ile sırayla fotoğrafı açılan sayaçlar ve konsept marka şeridi
-- Okunabilir üç yazı, kurucu alanı, genişletilebilir SSS
+- Stüdyo metninin yanında soldan gelen, hover sırasında derinlik ve yakınlaşma efekti veren görsel
+- İzometrik mimari çizimli dördüncü yazı dahil okunabilir dört yazı, kurucu alanı, genişletilebilir SSS
 - Demo proje formu, tarih/saat seçimi ve cihazda oluşturulan talep indirmesi
 - Mobil düzen, klavye erişimi ve azaltılmış hareket tercihi desteği
 - Yerel WebP görseller ve yerel font dosyaları

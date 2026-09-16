@@ -3,13 +3,16 @@
   const $ = (s, root = document) => root.querySelector(s);
   const $$ = (s, root = document) => [...root.querySelectorAll(s)];
   const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const {clamp, progress, gallery, galleryPosition, storyTravel, statIndex} = window.KabizzuMotion;
+  const {clamp, progress, gallery, galleryPosition, storyTravel, storyEntrance, statIndex} = window.KabizzuMotion;
   const hero = $('.hero');
   const composition = $('.composition');
   const projectsSection = $('.projects');
   const projectTrack = $('.project-track');
   const projectPin = $('.project-pin');
   const story = $('.story');
+  const architectureCard = $('.architecture-card');
+  const aboutEditorial = $('.about-editorial');
+  const aboutVisual = $('.about-visual');
   const statsScene = $('.stats-scene');
   const cards = $$('.stat-card');
   const floating = $$('.floating-image');
@@ -54,6 +57,9 @@
     const projectRect = projectsSection.getBoundingClientRect();
     const storyRect = story.getBoundingClientRect();
     const statsRect = statsScene.getBoundingClientRect();
+    const aboutRect = aboutEditorial.getBoundingClientRect();
+    const cardWidth = architectureCard.offsetWidth;
+    const cardHeight = architectureCard.offsetHeight;
     // Read all section geometry before writing transforms.
     const h = clamp(-heroRect.top / vh);
     $('.hero-frame img').style.transform = `scale(${1 + h * .08})`;
@@ -72,11 +78,18 @@
       $('#collection-index').textContent = $('#project-index').textContent = String(p.index + 1).padStart(2,'0');
     }
     const s = progress(storyRect.top, storyRect.height, vh);
-    $('.story-track').style.transform = `translate3d(${-storyTravel(s, vw)}px,0,0)`;
+    $('.story-track').style.transform = `translate3d(${vw - cardWidth - storyTravel(s, vw)}px,0,0)`;
+    const entrance = storyEntrance(s, cardWidth, cardHeight);
+    architectureCard.style.transform = `translate3d(${entrance.offset}px,${entrance.offset}px,0) scale(${entrance.scale})`;
+    architectureCard.style.clipPath = `inset(${entrance.insetTop}px 0 0 ${entrance.insetLeft}px round 7px)`;
     $('.story-opening').style.transform = `translate3d(${-s * vw * .15}px,${-s * 30}px,0)`;
     $('.sketch-one').style.transform = `translate3d(${-s * 100}px,${-s * 80}px,0) rotate(${-16 + s * 15}deg)`;
     $('.sketch-two').style.transform = `translate3d(${s * 100}px,${s * 90}px,0) rotate(${7 - s * 15}deg)`;
     $('.material-collage').style.setProperty('--collage-shift', `${(s - .5) * 50}px`);
+    const arrival = clamp((vh * .95 - aboutRect.top) / (vh * .65));
+    const arrived = 1 - (1 - arrival) ** 3;
+    aboutVisual.style.transform = `translate3d(${(arrived - 1) * Math.min(vw * .3, 320)}px,${(1 - arrived) * 45}px,0)`;
+    aboutVisual.style.opacity = clamp(arrival * 2);
     const stat = statIndex(progress(statsRect.top, statsRect.height, vh));
     if (statsRect.top < vh * .45 && statsRect.bottom > 0 && activeStat !== stat) {
       activeStat = stat;
@@ -101,7 +114,7 @@
   motion.addEventListener('change', () => {
     initializeScrolling();
     if (motion.matches) {
-      [$('.hero-frame img'), $('.hero h1'), projectTrack, $('.story-track'), $('.story-opening'), ...floating].forEach(el => el.removeAttribute('style'));
+      [$('.hero-frame img'), $('.hero h1'), projectTrack, $('.story-track'), $('.story-opening'), architectureCard, aboutVisual, ...floating].forEach(el => el.removeAttribute('style'));
       counters.clear();
       cards.forEach(card => {card.classList.remove('is-active');const number=$('.stat-number',card);number.textContent=String(number.dataset.count).padStart(2,'0');});
       activeStat = -1;
@@ -189,6 +202,8 @@
     {title:'Bir odayı ev yapan şey: ışık.', label:'IŞIK & YAŞAM', image:'/assets/living.webp', paragraphs:['Bir odaya ilk girdiğimizde çoğu zaman eşyaları gördüğümüzü düşünürüz. Oysa ilk hissettiğimiz şey ışıktır. Sabahın yumuşak gölgeleri ve akşamın sıcak tonları, aynı mekâna bambaşka bir karakter verir.','Bu yüzden tasarımın başlangıcında mobilyalardan önce günün hareketine bakarız. Pencerenin yönü, perdenin geçirgenliği ve duvarın dokusu birlikte düşünülür. Mat bir yüzey ışığı dağıtırken, taşın ince damarları onu başka bir ritimde yakalar.','İyi aydınlatılmış bir ev, her köşesi aynı parlaklıkta olan bir yer değildir. Aksine, ışık ve gölge arasında dinlenebileceğimiz alanlar bırakır. Bir okuma köşesi, sofranın üzerindeki sıcak bir çember, akşamları loş kalan bir koridor… Yaşam, bu küçük farkların içinde yerini bulur.']},
     {title:'Doğal malzemeler neden zamanla güzelleşir?', label:'MALZEME & DOKU', image:'/assets/residence.webp', paragraphs:['Ahşap koyulaşır. Taşın yüzeyi yumuşar. Keten, her yıkamada başka türlü kıvrılır. Doğal malzemeleri seçerken yalnızca ilk gün nasıl göründüklerini değil, bizimle birlikte nasıl değişeceklerini de düşünürüz.','Bir yüzeyin kusursuz olması ile iyi hissettirmesi aynı şey değildir. Cevizin damarları, travertenin gözenekleri ve el sıvasının hafif dalgaları, mekâna tekrarlanamayan bir derinlik katar. Işık, bu küçük farklılıkların üzerinde dolaşır.','Malzeme paletini sade tutmak, bütün yüzeyleri birbirine benzetmek anlamına gelmez. Sıcak ahşabın yanında serin bir taş, ağır bir kütlenin yanında ince bir kumaş kullanmak, dengeli bir karşılaşma yaratır. Kalıcı olan çoğu zaman bu dengedir.']},
     {title:'Yavaşlamak için tasarlanmış mekânlar.', label:'RİTİM & MEKÂN', image:'/assets/coffee.webp', paragraphs:['Bazı yerlerden geçeriz, bazı yerlerde kalmak isteriz. Aradaki fark her zaman ilk bakışta görünmez. Oturduğumuz koltuğun açısı, yanımızdaki masayla aramızdaki mesafe ve duyduğumuz sesler bu hissi birlikte oluşturur.','Bir kahve mekânını tasarlarken yalnızca kaç kişinin oturacağını hesaplamak yetmez. Birinin tek başına okuyabileceği, iki kişinin rahatça konuşabileceği ve bir grubun bir araya gelebileceği farklı ritimler düşünmek gerekir.','Küçük bir mola için tasarlanan yerler, günün geri kalanına da dokunur. Malzeme, ışık ve ölçek doğru bir araya geldiğinde mekân bizi acele ettirmez. Bir fincanın başında biraz daha kalmaya izin verir.']}
+,
+    {title:'Bir çizgiden bir yaşama: bütünü görmek.', label:'MİMARLIK & PERSPEKTİF', image:'/assets/architecture.webp', paragraphs:['Bir plan, yalnızca duvarların yerini tarif etmez. Sabah mutfaktan avluya yürüyüşü, sofranın etrafında toplanmayı ve günün sonunda sakin bir köşeye çekilmeyi de içinde taşır. Çizgilerin arasındaki boşluk, yaşamın kendisine ayrılmıştır.','İzometrik bir bakış, bu ilişkileri aynı anda görmemizi sağlar. Odaların birbirine açılması, eşiklerin derinliği ve avlunun yapıyla kurduğu bağ tek bir görüntüde anlaşılır. İçerisi ile dışarısı, ayrı sahneler olmaktan çıkar; aynı kompozisyonun parçaları olur.','Tasarım sürecinde bütüne tekrar tekrar bakarız. Güzel bir ayrıntının doğru yerde olması, mekânın geri kalanıyla kurduğu ilişkiye bağlıdır. İlk çizgiden son malzeme seçimine kadar korumaya çalıştığımız şey, tam da bu birlikteliktir.']}
   ];
   function showArticle(index) {
     const article = articles[index];
