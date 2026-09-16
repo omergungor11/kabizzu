@@ -1,0 +1,45 @@
+/* A single filmstrip resolves into the first room, then hands off to the page. */
+.visually-hidden{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
+.site-intro{display:none;--tile:4vw;--step:4.4vw;--wave:2.2vw;--photo-width:42vw;--photo-height:51svh}
+.intro-pending{overflow:hidden;scrollbar-width:none}
+.intro-pending::-webkit-scrollbar{display:none}
+.intro-pending .site-intro{display:block;position:fixed;inset:0;z-index:100;background:var(--paper);overflow:hidden;isolation:isolate}
+.intro-curtain{position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 2.8%,rgba(78,80,58,.035) 2.8% 6.8%,transparent 6.8% 7.2%);mask-image:linear-gradient(transparent,#000 8% 44%,#000b 50%,#000 56% 92%,transparent);pointer-events:none}
+.intro-brand{position:absolute;top:28px;left:0;width:100%;text-align:center;z-index:4}
+.intro-brand>.wordmark{display:inline-block}
+.intro-signature{display:block;width:max-content;max-width:94vw;margin:5px auto 0;font:italic clamp(21px,2.45vw,37px)/1.2 var(--serif);letter-spacing:-.015em;clip-path:inset(0 100% 0 0)}
+.intro-gallery{position:absolute;inset:0;pointer-events:none;z-index:2}
+.intro-tile{position:absolute;left:calc(50% - var(--tile)/2);top:calc(50% - var(--tile)/2);width:var(--tile);height:var(--tile);overflow:hidden;opacity:0;will-change:transform,opacity}
+.intro-tile img{object-fit:cover}
+.intro-copy{position:absolute;top:67%;width:100%;padding:0 6%;text-align:center;z-index:2}
+.intro-title{font:400 clamp(38px,5.5vw,88px)/1.15 var(--serif);letter-spacing:-.03em;opacity:0}
+.intro-character{display:inline-block;white-space:pre}
+.intro-subtitle{font-size:14px;color:#77786b;line-height:1.6;margin-top:13px;opacity:0}
+.intro-photo{position:absolute;top:50%;left:50%;width:var(--tile);height:var(--tile);transform:translate(-50%,-50%);overflow:hidden;z-index:3;opacity:0;contain:layout paint}
+.intro-photo img{object-position:50% 56%;transform:none}
+.intro-photo-shade{position:absolute;inset:0;background:#14180e;opacity:0}
+.intro-skip{position:absolute;right:4%;bottom:28px;padding:14px 0 14px 20px;background:none;font-size:10px;letter-spacing:.12em;z-index:6;color:var(--ink);transition:opacity .2s}
+.intro-skip>span{margin-left:12px;font-size:15px}.intro-skip:hover{opacity:.65}
+.intro-pending .site-header,.intro-pending .hero-caption,.intro-pending .hero-line-text,.intro-pending .hero-bottom{opacity:0}
+.site-header{color:var(--paper)}
+.hero.hero--immersive{height:125svh;color:var(--paper)}
+.hero--immersive .hero-sticky{height:100svh;min-height:0;background:#303225}
+.hero--immersive .hero-frame{inset:0;width:100%;height:100%;will-change:auto}
+.hero--immersive .hero-frame img{transform:none;will-change:transform}
+.hero--immersive .hero-shade{opacity:.32}
+.hero--immersive .hero-caption{top:51%;font:italic clamp(22px,2.5vw,39px)/1.3 var(--serif);letter-spacing:-.01em}
+.hero--immersive h1{top:58%;font-size:clamp(58px,6.7vw,106px);line-height:.96;will-change:transform,opacity}
+.hero-line{display:block;overflow:hidden;padding:.08em .04em;margin:-.08em 0}
+.hero-line-text{display:inline-block}
+@media(max-width:900px){.intro-brand{top:22px}.hero--immersive h1{font-size:9vw}}
+@media(max-width:600px){
+  .site-intro{--tile:5.3vw;--step:5.9vw;--wave:3.2vw;--photo-width:78vw;--photo-height:36svh}
+  .intro-brand{top:24px}.intro-brand .wordmark{font-size:42px}.intro-signature{font-size:22px;margin-top:8px}
+  .intro-copy{top:66%;padding:0 4%}.intro-title{font-size:8.5vw}.intro-subtitle{max-width:250px;margin:14px auto 0;font-size:12px}
+  .intro-skip{right:6%;bottom:20px;font-size:9px}
+  .hero--immersive .hero-caption{top:51%;font-size:23px}
+  .hero--immersive h1{top:59%;font-size:clamp(48px,13vw,78px)}
+  .hero--immersive .hero-frame img,.intro-photo img{object-position:52% 56%}
+}
+@media(max-height:500px) and (min-width:601px){.intro-brand{top:14px}.intro-brand .wordmark{font-size:36px}.intro-signature{font-size:21px}.intro-title{font-size:8vh}.hero--immersive h1{font-size:13vh}.hero--immersive .hero-caption{top:42%;font-size:24px}.hero--immersive h1{top:53%}.hero-bottom p,.hero-edition{font-size:9px}}
+@media(prefers-reduced-motion:reduce){.intro-pending{overflow:visible}.intro-pending .site-intro{display:none}.intro-pending .site-header,.intro-pending .hero-caption,.intro-pending .hero-line-text,.intro-pending .hero-bottom{opacity:1}.hero.hero--immersive{height:100svh;min-height:0}.hero--immersive .hero-frame img{will-change:auto}}

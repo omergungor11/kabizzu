@@ -4,7 +4,10 @@ Mimarlık ve iç mekân odaklı, Türkçe bir konsept stüdyo sitesi. Krem ve ze
 
 ## Deneyim
 
-- Scroll ile tam ekrana açılan kapak görseli
+- İki sıralı fotoğraf şeridinin tek sırada birleşip merkezde toplandığı açılış animasyonu
+- Merkezdeki fotoğraftan tam ekran kapak görseline kesintisiz geçiş ve sıralı metin açılışı
+- Açılışta görsel/font yükleme kontrolü; geç düğmesi, Escape, azaltılmış hareket ve hata durumunda otomatik açılma
+- Tam ekran kapakta scroll ile derinlik hareketi
 - Farklı hızlarda ilerleyen fotoğraf katmanları ve parallax
 - Üç konsept mekân arasında geçiş ve açılabilir proje detayları
 - Tam ekran menü, sayfa içi gezinme ve süreç akordeonları
@@ -30,6 +33,8 @@ dist/
   index.html          Sayfa içeriği ve dialog yapıları
   style.css           Görsel dil, responsive düzen ve geçişler
   app.js              Scroll, menü ve proje etkileşimleri
+  intro.js            Açılış zaman çizelgesi ve güvenli tamamlanma
+  intro.css           Yükleme sahnesi ve tam ekran kapak
   assets/             WebP görseller ve fontlar
 docs/image-prompts.json  Özgün görsellerin üretim istemleri
 licenses/             Üçüncü taraf font lisansları
@@ -40,6 +45,8 @@ licenses/             Üçüncü taraf font lisansları
 
 ```sh
 node --check dist/app.js
+node --check dist/intro.js
+node --test scripts/intro.test.mjs
 python3 scripts/validate.py
 ```
 

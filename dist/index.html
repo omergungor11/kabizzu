@@ -6,11 +6,36 @@
   <meta name="theme-color" content="#f4f3e9">
   <title>Kabizzu — Mimarlık & İç Mekân</title>
   <meta name="description" content="Mekânın şiiri, yaşamın ritmi. Kabizzu; mimarlığı, iç mekânı ve uygulamayı bir bütün olarak düşünür.">
+  <script>
+    if (!location.hash && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.documentElement.classList.add('intro-pending');
+      window.kabizzuIntroWatchdog = setTimeout(function () {
+        document.documentElement.classList.remove('intro-pending');
+        document.querySelectorAll('[data-intro-inert]').forEach(function (element) {
+          element.inert = false;
+          element.removeAttribute('data-intro-inert');
+        });
+        window.dispatchEvent(new Event('kabizzu:intro-timeout'));
+      }, 9000);
+    }
+  </script>
+  <link rel="preload" as="image" href="/assets/living.webp">
   <link rel="stylesheet" href="/assets/fonts/fonts.css">
   <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/intro.css">
+  <script src="/intro.js" defer></script>
   <script src="/app.js" defer></script>
 </head>
 <body>
+  <div class="site-intro" aria-label="Kabizzu açılışı">
+    <div class="intro-curtain" aria-hidden="true"></div>
+    <div class="intro-brand" aria-hidden="true"><span class="wordmark">kabizzu<span class="brand-dot">✳</span></span><span class="intro-signature">Mimarlık × İç mekân × Yaşam</span></div>
+    <div class="intro-gallery" aria-hidden="true"></div>
+    <div class="intro-copy" aria-hidden="true"><p class="intro-title">Bir bütün olarak yaşam.</p><p class="intro-subtitle">Birbirini tamamlayan çizgiler, size ait mekânlar.</p></div>
+    <div class="intro-photo" aria-hidden="true"><img src="/assets/living.webp" alt="" width="1536" height="1024" fetchpriority="high"><div class="intro-photo-shade"></div></div>
+    <button class="intro-skip" type="button">AÇILIŞI GEÇ <span aria-hidden="true">↗</span></button>
+    <span class="visually-hidden" role="status">Kabizzu açılıyor.</span>
+  </div>
   <a class="skip-link" href="#studio">İçeriğe geç</a>
   <header class="site-header">
     <button class="menu-toggle" aria-haspopup="dialog" aria-controls="menu-dialog"><span class="menu-bars" aria-hidden="true"></span><span>MENÜ</span></button>
@@ -19,11 +44,11 @@
   </header>
 
   <main>
-    <section class="hero" id="top" aria-labelledby="hero-title">
+    <section class="hero hero--immersive" id="top" aria-labelledby="hero-title">
       <div class="hero-sticky">
-        <div class="hero-caption eyebrow">MİMARLIK × İÇ MEKÂN × YAŞAM</div>
+        <div class="hero-caption eyebrow">Mimarlık × İç mekân × Yaşam</div>
         <div class="hero-frame"><img src="/assets/living.webp" alt="Gün ışığı alan, doğal taş ve kıvrımlı mobilyalarla tasarlanmış bir yaşam alanı" width="1536" height="1024" fetchpriority="high"><div class="hero-shade"></div></div>
-        <h1 id="hero-title">Mekânın şiiri,<br><em>yaşamın ritmi.</em></h1>
+        <h1 id="hero-title" aria-label="Mekânın şiiri, yaşamın ritmi."><span class="hero-line" aria-hidden="true"><span class="hero-line-text">Mekânın şiiri,</span></span><span class="hero-line" aria-hidden="true"><em class="hero-line-text">yaşamın ritmi.</em></span></h1>
         <div class="hero-bottom"><p>Birbirini tamamlayan çizgiler.<br>Bir bütün olarak yaşam.</p><a href="#studio" class="scroll-link"><span>KEŞFETMEK İÇİN KAYDIR</span><span class="scroll-line" aria-hidden="true"></span></a><span class="hero-edition">KABİZZU STUDIO<br>DESIGN STUDY / 2026</span></div>
       </div>
     </section>

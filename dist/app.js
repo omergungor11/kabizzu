@@ -16,26 +16,14 @@
     framePending = false;
     if (reducedMotion.matches) return;
     const vh = window.innerHeight;
-    const width = window.innerWidth;
     const heroRect = hero.getBoundingClientRect();
     const compositionRect = composition.getBoundingClientRect();
     const interludeRect = interlude.getBoundingClientRect();
-    const p = clamp(-heroRect.top / (heroRect.height - vh));
+    const p = clamp(-heroRect.top / Math.max(1, heroRect.height - vh));
     const eased = p * p * (3 - 2 * p);
-    const mobile = width <= 600;
-    const tablet = width <= 900;
-    const top = mobile ? 25 : tablet ? 24 : width >= 1600 ? 21 : 23;
-    const left = mobile ? 9 : tablet ? 14 : 23;
-    const height = mobile ? 42 : tablet ? 47 : 51;
-    heroFrame.style.top = lerp(top, 0, eased) + '%';
-    heroFrame.style.left = lerp(left, 0, eased) + '%';
-    heroFrame.style.width = lerp(100 - 2 * left, 100, eased) + '%';
-    heroFrame.style.height = lerp(height, 100, eased) + '%';
-    $('.hero-shade').style.opacity = lerp(.08, .38, eased);
-    heroTitle.style.transform = `translateY(${-eased * (mobile ? 80 : 115)}px)`;
-    heroTitle.style.color = `rgb(${Math.round(lerp(40, 244, eased))},${Math.round(lerp(41, 243, eased))},${Math.round(lerp(31, 233, eased))})`;
-    $('.hero-bottom').style.color = heroTitle.style.color;
-    $('.hero-caption').style.opacity = 1 - clamp(p * 4);
+    heroFrame.querySelector('img').style.transform = `scale(${lerp(1, 1.08, eased)})`;
+    heroTitle.style.transform = `translateY(${-eased * 55}px)`;
+    heroTitle.style.opacity = 1 - eased * .7;
     const c = clamp(-compositionRect.top / (compositionRect.height - vh));
     floating.forEach((image, i) => {
       const travel = [122, 163, 164, 176][i];
@@ -51,7 +39,7 @@
   window.addEventListener('resize', requestFrame, { passive: true });
   reducedMotion.addEventListener('change', () => {
     if (reducedMotion.matches) {
-      [heroFrame, heroTitle, $('.hero-shade'), $('.hero-bottom'), $('.hero-caption'), $('.interlude-image'), ...floating].forEach(el => el.removeAttribute('style'));
+      [heroFrame.querySelector('img'), heroTitle, $('.interlude-image'), ...floating].forEach(el => el.removeAttribute('style'));
     } else requestFrame();
   });
   renderScroll();
