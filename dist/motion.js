@@ -8,9 +8,10 @@
     return {travel, index: Math.round(travel * (count - 1)), scale: 1 + clamp(p / .12) * .52};
   };
   const galleryPosition = (index, count = 4) => .12 + .88 * clamp(index / (count - 1));
-  const storyTravel = (p, width) => clamp((p - .44) / .56) * width * (width <= 600 ? 1.76 : 1);
+  // Finish horizontal travel before the next section covers the pinned scene.
+  const storyTravel = (p, width) => clamp((p - .34) / .50) * (width <= 600 ? width * 1.76 : width - 24);
   const storyEntrance = (p, width, height) => {
-    const t = clamp((p - .06) / .32);
+    const t = clamp((p - .035) / .30);
     const growth = t * t * (3 - 2 * t);
     const edge = Math.min(width, height);
     const tile = Math.min(90, edge * .2);
@@ -21,6 +22,7 @@
       offset: 24 * (growth - 1)
     };
   };
+  const storyCover = p => clamp((p - 6 / 7) * 7);
   const statIndex = p => Math.min(3, Math.floor(clamp(p) * 4));
-  root.KabizzuMotion = {clamp, progress, gallery, galleryPosition, storyTravel, storyEntrance, statIndex};
+  root.KabizzuMotion = {clamp, progress, gallery, galleryPosition, storyTravel, storyEntrance, storyCover, statIndex};
 })(globalThis);

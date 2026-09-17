@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import '../dist/motion.js';
-const {progress,gallery,galleryPosition,storyTravel,storyEntrance,statIndex}=globalThis.KabizzuMotion;
+const {progress,gallery,galleryPosition,storyTravel,storyEntrance,storyCover,statIndex}=globalThis.KabizzuMotion;
 
 test('gallery reaches all four rooms, stays bounded, and reverses without dead zones',()=>{
   assert.equal(gallery(progress(500,3168,720)).travel,0);
@@ -16,9 +16,9 @@ test('both horizontal stages have stable endpoints across desktop and mobile wid
     assert.equal(storyTravel(0,width),0);
     assert.equal(storyTravel(-1,width),0);
     assert.equal(storyTravel(2,width),storyTravel(1,width));
-    assert.ok(storyTravel(1,width)>=width);
+    assert.ok(storyTravel(1,width)>0);
   }
-  assert.equal(storyTravel(1,1280),1280);
+  assert.equal(storyTravel(1,1280),1256);
   assert.equal(storyTravel(1,390),686.4);
 });
 test('photo counters activate sequentially, including the exact final scroll position',()=>{
@@ -34,10 +34,19 @@ test('architecture opens as a true square, reaches full size before lateral trav
     assert.ok((width-start.insetLeft)*start.scale<=90);
     const end=storyEntrance(.38,width,height);
     assert.equal(end.scale,1);assert.equal(end.insetTop,0);assert.equal(end.insetLeft,0);assert.equal(end.offset,0);
-    assert.equal(storyTravel(.38,1280),0);
+    assert.equal(storyTravel(.335,1280),0);
     assert.ok(storyTravel(.6,1280)>0);
     let last=0;
     for(let p=0;p<=.4;p+=.01){const frame=storyEntrance(p,width,height);assert.ok(frame.scale>=last);last=frame.scale;}
     assert.deepEqual(storyEntrance(-1,width,height),start);
   }
+});
+
+test('next section covers a stationary final frame, with no blank gap on reversal',()=>{
+  assert.equal(storyCover(6/7),0);
+  assert.ok(Math.abs(storyCover(6.5/7)-.5)<1e-9);
+  assert.equal(storyCover(1),1);
+  assert.equal(storyCover(2),1);
+  assert.equal(storyCover(-1),0);
+  for(const p of [.86,.92,1]) assert.equal(storyTravel(p,1280),storyTravel(1,1280));
 });

@@ -3,7 +3,7 @@
   const $ = (s, root = document) => root.querySelector(s);
   const $$ = (s, root = document) => [...root.querySelectorAll(s)];
   const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const {clamp, progress, gallery, galleryPosition, storyTravel, storyEntrance, statIndex} = window.KabizzuMotion;
+  const {clamp, progress, gallery, galleryPosition, storyTravel, storyEntrance, storyCover, statIndex} = window.KabizzuMotion;
   const hero = $('.hero');
   const composition = $('.composition');
   const projectsSection = $('.projects');
@@ -82,10 +82,10 @@
     const entrance = storyEntrance(s, cardWidth, cardHeight);
     architectureCard.style.transform = `translate3d(${entrance.offset}px,${entrance.offset}px,0) scale(${entrance.scale})`;
     architectureCard.style.clipPath = `inset(${entrance.insetTop}px 0 0 ${entrance.insetLeft}px round 7px)`;
-    $('.story-opening').style.transform = `translate3d(${-s * vw * .15}px,${-s * 30}px,0)`;
-    $('.sketch-one').style.transform = `translate3d(${-s * 100}px,${-s * 80}px,0) rotate(${-16 + s * 15}deg)`;
-    $('.sketch-two').style.transform = `translate3d(${s * 100}px,${s * 90}px,0) rotate(${7 - s * 15}deg)`;
-    $('.material-collage').style.setProperty('--collage-shift', `${(s - .5) * 50}px`);
+    const cover = storyCover(s);
+    $('.story-opening').style.opacity = 1 - clamp(cover * 3);
+    $('.sketch-one').style.transform = `translate3d(0,${-s * 24}px,0)`;
+    $('.sketch-two').style.transform = `translate3d(0,${s * 24}px,0)`;
     const arrival = clamp((vh * .95 - aboutRect.top) / (vh * .65));
     const arrived = 1 - (1 - arrival) ** 3;
     aboutVisual.style.transform = `translate3d(${(arrived - 1) * Math.min(vw * .3, 320)}px,${(1 - arrived) * 45}px,0)`;
