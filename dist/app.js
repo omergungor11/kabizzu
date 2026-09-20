@@ -75,8 +75,8 @@
       const travel = [1.18,1.4,1.66,1.9][i];
       image.style.transform = `translate3d(0,${-c * vh * travel}px,0) rotate(${[1.5,-2,2,-1][i] * (1 - c)}deg)`;
     });
-    const p = gallery(progress(projectRect.top, projectRect.height, vh));
-    projectTrack.style.transform = `translate3d(${-p.travel * vw * 3}px,0,0)`;
+    const p = gallery(progress(projectRect.top, projectRect.height, vh), projectButtons.length);
+    projectTrack.style.transform = `translate3d(${-p.travel * vw * (projectButtons.length - 1)}px,0,0)`;
     projectPin.style.setProperty('--project-scale', p.scale);
     $('.project-progress>span').style.transform = `scaleX(${.25 + p.travel * .75})`;
     if (lastGalleryIndex !== p.index) {
@@ -145,7 +145,7 @@
   projectButtons.forEach((button, index) => button.addEventListener('focus', () => {
     if (motion.matches || index === lastGalleryIndex) return;
     const rect = projectsSection.getBoundingClientRect();
-    jumpTo(window.scrollY + rect.top + galleryPosition(index) * (rect.height - window.innerHeight));
+    jumpTo(window.scrollY + rect.top + galleryPosition(index, projectButtons.length) * (rect.height - window.innerHeight));
   }));
 
   const menu = $('#menu-panel');
