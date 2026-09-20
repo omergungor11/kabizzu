@@ -10,12 +10,12 @@ Mimarlık ve iç mekân odaklı, Türkçe bir konsept stüdyo sitesi. Krem ve ze
 - Tam ekran kapakta scroll ile derinlik hareketi
 - Farklı hızlarda ilerleyen fotoğraf katmanları ve parallax
 - Dikey kaydırmayla yatay ilerleyen dört konsept mekân ve açılabilir proje detayları
-- Kompakt açılır menü, Lenis ile yumuşak kaydırma ve sayfa içi gezinme
-- Görselli dört süreç satırı, lacivert sahnede sağ alttaki bir kareden büyüyerek açılan mimarlık kartı ve ardından yatay ilerleyen üç yaklaşım kartı
+- Hover ile açılan, dokunma ve klavyeyle de kullanılabilen kompakt menü, Lenis ile yumuşak kaydırma ve sayfa içi gezinme
+- Scroll ile siyah-beyazdan renkliye geçen dört süreç satırı, lacivert sahnede sağ alttaki bir kareden büyüyerek açılan sütun biçimli mimarlık kartı ve ardından yatay ilerleyen üç yaklaşım kartı
 - Son kartların sabit kaldığı, Hakkımızda bölümünün alttan yükselerek lacivert sahneyi kapattığı scroll geçişi
 - Scroll ile sırayla fotoğrafı açılan sayaçlar ve konsept marka şeridi
 - Stüdyo metninin yanında soldan gelen, hover sırasında derinlik ve yakınlaşma efekti veren görsel
-- İzometrik mimari çizimli dördüncü yazı dahil okunabilir dört yazı, kurucu alanı, genişletilebilir SSS
+- Sağda daha küçük ve aşağıda konumlanan, izometrik açılı dördüncü yazı dahil okunabilir dört yazı, kurucu alanı, genişletilebilir SSS
 - Demo proje formu, tarih/saat seçimi ve cihazda oluşturulan talep indirmesi
 - Mobil düzen, klavye erişimi ve azaltılmış hareket tercihi desteği
 - Yerel WebP görseller ve yerel font dosyaları
@@ -43,7 +43,7 @@ dist/
   vendor/             Sabit sürümlü Lenis 1.3.26
   intro.js            Açılış zaman çizelgesi ve güvenli tamamlanma
   intro.css           Yükleme sahnesi ve tam ekran kapak
-  assets/             WebP görseller ve fontlar
+  assets/             WebP görseller, özgün SVG çizimleri ve fontlar
 docs/image-prompts.json  Özgün görsellerin üretim istemleri
 licenses/             Üçüncü taraf font lisansları
 .openai/hosting.json   Sites yayın ayarı

@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import '../dist/motion.js';
-const {progress,gallery,galleryPosition,storyTravel,storyEntrance,storyCover,statIndex}=globalThis.KabizzuMotion;
+const {progress,gallery,galleryPosition,storyTravel,storyEntrance,storyCover,deliveryActivation,statIndex}=globalThis.KabizzuMotion;
 
 test('gallery reaches all four rooms, stays bounded, and reverses without dead zones',()=>{
   assert.equal(gallery(progress(500,3168,720)).travel,0);
@@ -49,4 +49,17 @@ test('next section covers a stationary final frame, with no blank gap on reversa
   assert.equal(storyCover(2),1);
   assert.equal(storyCover(-1),0);
   for(const p of [.86,.92,1]) assert.equal(storyTravel(p,1280),storyTravel(1,1280));
+});
+
+test('process imagery colors in the viewport and returns to monochrome on either side',()=>{
+  for(const [height,viewport] of [[320,900],[650,720],[280,844]]){
+    assert.equal(deliveryActivation(viewport,height,viewport),0);
+    assert.equal(deliveryActivation(-height,height,viewport),0);
+    assert.equal(deliveryActivation((viewport-height)/2,height,viewport),1);
+    const positions=Array.from({length:40},(_,i)=>viewport-i*(viewport+height)/39);
+    const forward=positions.map(top=>deliveryActivation(top,height,viewport));
+    assert.ok(forward.some(value=>value>0&&value<1));
+    assert.ok(forward.every(value=>value>=0&&value<=1));
+    assert.deepEqual(positions.reverse().map(top=>deliveryActivation(top,height,viewport)),forward.reverse());
+  }
 });

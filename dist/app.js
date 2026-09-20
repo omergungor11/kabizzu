@@ -3,7 +3,7 @@
   const $ = (s, root = document) => root.querySelector(s);
   const $$ = (s, root = document) => [...root.querySelectorAll(s)];
   const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const {clamp, progress, gallery, galleryPosition, storyTravel, storyEntrance, storyCover, statIndex} = window.KabizzuMotion;
+  const {clamp, progress, gallery, galleryPosition, storyTravel, storyEntrance, storyCover, deliveryActivation, statIndex} = window.KabizzuMotion;
   const hero = $('.hero');
   const composition = $('.composition');
   const projectsSection = $('.projects');
@@ -17,6 +17,7 @@
   const cards = $$('.stat-card');
   const floating = $$('.floating-image');
   const projectButtons = $$('.project-image-button');
+  const deliveryRows = $$('.delivery-row');
   let lenis;
   let rafPending = false;
   let lastGalleryIndex = -1;
@@ -60,8 +61,13 @@
     const aboutRect = aboutEditorial.getBoundingClientRect();
     const cardWidth = architectureCard.offsetWidth;
     const cardHeight = architectureCard.offsetHeight;
+    const deliveryRects = deliveryRows.map(row => $('figure', row).getBoundingClientRect());
     // Read all section geometry before writing transforms.
     const h = clamp(-heroRect.top / vh);
+    deliveryRows.forEach((row, i) => {
+      const rect = deliveryRects[i];
+      row.style.setProperty('--delivery-color', deliveryActivation(rect.top, rect.height, vh));
+    });
     $('.hero-frame img').style.transform = `scale(${1 + h * .08})`;
     $('.hero h1').style.transform = `translate3d(0,${-h * 70}px,0)`;
     const c = progress(cRect.top, cRect.height, vh);
@@ -116,6 +122,7 @@
     if (motion.matches) {
       [$('.hero-frame img'), $('.hero h1'), projectTrack, $('.story-track'), $('.story-opening'), architectureCard, aboutVisual, ...floating].forEach(el => el.removeAttribute('style'));
       counters.clear();
+      deliveryRows.forEach(row => row.style.removeProperty('--delivery-color'));
       cards.forEach(card => {card.classList.remove('is-active');const number=$('.stat-number',card);number.textContent=String(number.dataset.count).padStart(2,'0');});
       activeStat = -1;
     } else requestFrame();
@@ -142,14 +149,37 @@
 
   const menu = $('#menu-panel');
   const menuToggle = $('.menu-toggle');
+  let menuCloseTimer;
+  let openedByHover = false;
+  function openMenu() {
+    clearTimeout(menuCloseTimer);
+    menu.hidden = false;
+    menuToggle.setAttribute('aria-expanded','true');
+  }
   function closeMenu(restoreFocus = false) {
+    clearTimeout(menuCloseTimer);
+    openedByHover = false;
     menu.hidden = true;
     menuToggle.setAttribute('aria-expanded','false');
     if (restoreFocus) menuToggle.focus({preventScroll:true});
   }
   menuToggle.addEventListener('click', () => {
-    menu.hidden = !menu.hidden;
-    menuToggle.setAttribute('aria-expanded', String(!menu.hidden));
+    if (menu.hidden || openedByHover) {openMenu();openedByHover = false;}
+    else closeMenu();
+  });
+  [menuToggle, menu].forEach(surface => {
+    surface.addEventListener('pointerenter', event => {
+      if (event.pointerType !== 'mouse') return;
+      if (menu.hidden) openedByHover = true;
+      openMenu();
+    });
+    surface.addEventListener('pointerleave', event => {
+      if (event.pointerType !== 'mouse') return;
+      // Bridge the small gap between the trigger and its dropdown.
+      menuCloseTimer = setTimeout(() => {
+        if (!menu.contains(document.activeElement)) closeMenu();
+      }, 180);
+    });
   });
   document.addEventListener('click', event => {
     if (!menu.hidden && !menu.contains(event.target) && !menuToggle.contains(event.target)) closeMenu();

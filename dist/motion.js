@@ -23,6 +23,10 @@
     };
   };
   const storyCover = p => clamp((p - 6 / 7) * 7);
+  const deliveryActivation = (top, height, viewport) => {
+    const distance = Math.max(1, Math.min(height * .65, viewport * .35));
+    return clamp((viewport * .72 - top) / distance) * clamp((top + height - viewport * .1) / distance);
+  };
   const statIndex = p => Math.min(3, Math.floor(clamp(p) * 4));
-  root.KabizzuMotion = {clamp, progress, gallery, galleryPosition, storyTravel, storyEntrance, storyCover, statIndex};
+  root.KabizzuMotion = {clamp, progress, gallery, galleryPosition, storyTravel, storyEntrance, storyCover, deliveryActivation, statIndex};
 })(globalThis);

@@ -18,6 +18,8 @@ Font dosyaları Google Fonts dağıtımından alınmış, değiştirilmeden yere
 
 `dist/assets/living.webp`, `residence.webp`, `coffee.webp`, `suite.webp`, `architecture.webp` ve `studio-portrait.webp`, bu proje için OpenAI Imagegen ile üretilmiştir. Gerçek bir mimarlık işinin belgesel fotoğrafı değildir. Portredeki kişi kurgusaldır. Marka seçkisi, stüdyo bilgileri ve sayaçlar portföy demosu için yazılmıştır. Üretim istemleri `docs/image-prompts.json` dosyasındadır.
 
+`dist/assets/elevation.svg` cephe çizimi ve `column-mask.svg` sütun formu bu proje için özgün olarak hazırlanmıştır; proje MIT lisansı kapsamındadır.
+
 ## Tasarım referansı
 
 [Stanzza](https://stanzza.design/awards), tasarım ve motion yaklaşımı için referanstır. Üçüncü taraf logosu, görseli ve kaynak kodu dağıtılmamaktadır. Bu projenin lisansı Stanzza'nın varlıklarını kapsamaz.
