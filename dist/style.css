@@ -77,7 +77,11 @@ dialog{color:var(--ink);border:0;padding:0;background:var(--paper);max-height:90
 .motion-ready .delivery-row{--delivery-color:0}
 .motion-ready .delivery-row img{filter:grayscale(calc(1 - var(--delivery-color))) saturate(calc(.7 + var(--delivery-color) * .3))}
 .motion-ready .delivery-text>div{opacity:calc(.5 + var(--delivery-color) * .5)}
-/* A capital and a foot frame the inset shaft of the architecture column. */
-.architecture-card{border-radius:0;-webkit-mask:url('/assets/column-mask.svg') center / 100% 100% no-repeat;mask:url('/assets/column-mask.svg') center / 100% 100% no-repeat}
+/* Both white columns share a profile; the blue panel fills their inset edges. */
+.architecture-card,.execution-card{z-index:2;border-radius:0;-webkit-mask:url('/assets/column-mask.svg') center / 100% 100% no-repeat;mask:url('/assets/column-mask.svg') center / 100% 100% no-repeat}
+.interiors-card{z-index:1;border-radius:0;isolation:isolate}
+.interiors-card::before{content:"";position:absolute;inset:0 -3.5%;z-index:-1;background:inherit;opacity:0;pointer-events:none}
+.story-track.is-joined .interiors-card::before{opacity:1}
 .sketch-two{filter:invert(1);mix-blend-mode:screen;opacity:.75}
 @media(prefers-reduced-motion:reduce){.motion-ready .delivery-row img{filter:none}.motion-ready .delivery-text>div{opacity:1}.journal-card--isometric .journal-image:is(:hover,:focus-visible) img{transform:rotateX(12deg) rotateY(-14deg) rotateZ(-5deg) scale(.94)}}
+@media(prefers-reduced-motion:reduce){.interiors-card::before{display:none}}

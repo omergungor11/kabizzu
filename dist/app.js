@@ -86,6 +86,7 @@
     const s = progress(storyRect.top, storyRect.height, vh);
     $('.story-track').style.transform = `translate3d(${vw - cardWidth - storyTravel(s, vw)}px,0,0)`;
     const entrance = storyEntrance(s, cardWidth, cardHeight);
+    $('.story-track').classList.toggle('is-joined', entrance.scale === 1);
     architectureCard.style.transform = `translate3d(${entrance.offset}px,${entrance.offset}px,0) scale(${entrance.scale})`;
     architectureCard.style.clipPath = `inset(${entrance.insetTop}px 0 0 ${entrance.insetLeft}px round 7px)`;
     const cover = storyCover(s);
